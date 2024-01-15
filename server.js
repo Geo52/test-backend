@@ -5,18 +5,21 @@ const port = 3000;
 const mongoose = require("mongoose");
 const Schema = require("./models/Schema");
 
+const cors = require('cors')
+
+app.use(cors())
+
 app.use(express.json())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.post('/', async (req, res) => {
+app.post('/post', async (req, res) => {
   try {
     // Assuming your schema has fields like 'name', 'email', etc. Adjust as needed.
     const newData = new Schema({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName
+      title: req.body.title
       // Add other fields as needed
     });
 
