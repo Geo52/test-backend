@@ -15,7 +15,8 @@ app.post('/', async (req, res) => {
   try {
     // Assuming your schema has fields like 'name', 'email', etc. Adjust as needed.
     const newData = new Schema({
-      title: req.body.title
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
       // Add other fields as needed
     });
 
