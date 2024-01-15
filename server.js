@@ -1,25 +1,24 @@
 const express = require("express");
 const app = express();
-const port = 3000;
-
+require('dotenv').config()
 const mongoose = require("mongoose");
 const Schema = require("./models/Schema");
+ 
+const cors = require("cors");
 
-const cors = require('cors')
+app.use(cors());
 
-app.use(cors())
+app.use(express.json());
 
-app.use(express.json())
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.post('/post', async (req, res) => {
+app.post("/post", async (req, res) => {
   try {
     // Assuming your schema has fields like 'name', 'email', etc. Adjust as needed.
     const newData = new Schema({
-      title: req.body.title
+      title: req.body.title,
       // Add other fields as needed
     });
 
@@ -28,14 +27,11 @@ app.post('/post', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-})
+});
 
-mongoose
-  .connect(
-    "mongodb+srv://jorge:69JnidkcqhIXUwQn@test.amni2ct.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
-    });
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`Example app listening on port ${process.env.PORT}`);
   });
+});
+
